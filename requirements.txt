@@ -1,0 +1,10 @@
+langgraph
+mcp
+litellm
+python-dotenv
+pydantic
+rich
+langsmith
+streamlit
+langchain-litellm==0.11.1
+pytest

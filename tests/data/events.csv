@@ -1,0 +1,7 @@
+id,title,date,day_offset,start,end,end_date,attendees,location,description
+evt_001,Lunch with Ananya,,0,12:30,13:30,,ananya.iyer@initech.com,Cafe Coffee Day,
+evt_002,Team standup,,1,10:00,10:30,,,Zoom,
+evt_003,Design review,,1,14:00,15:00,,priya.sharma@acme.com,Room 4B,
+evt_004,Vendor call,,1,16:30,17:00,,,,
+evt_005,1:1 with Rahul,,2,11:00,12:00,,rahul.verma@globex.com,,
+evt_006,Quarterly planning,,3,15:00,16:00,,,Boardroom,

@@ -1,0 +1,8 @@
+contact_id,days_ago,type,subject,summary
+con_001,2,email,Q4 roadmap,Priya shared feedback on the Q4 roadmap draft.
+con_001,9,meeting,Design review,Reviewed the new onboarding designs; two follow-ups assigned.
+con_001,21,call,Contract renewal,Discussed renewal terms; waiting on legal.
+con_002,5,email,Integration question,Asked about the API rate limits.
+con_003,1,call,Pricing,Rahul asked for a revised enterprise quote.
+con_003,14,meeting,Kickoff,Kickoff with the Globex team.
+con_005,30,email,Intro,Introductory email thread.
