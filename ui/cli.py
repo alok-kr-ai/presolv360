@@ -14,7 +14,6 @@ from config import Settings
 from graph.agent import Agent
 from observability import report
 from observability.recorder import build_turn_trace
-from tools.base import ErrorCode
 from ui.console import error_panel, warn_panel
 from ui.render import pending_banner, render_turn
 
@@ -24,7 +23,6 @@ HELP_COMMANDS = [
     ("/memory", "show working memory and any pending action"),
     ("/trace", "show the span tree of the last turn"),
     ("/runs", "list recorded runs in the log folder"),
-    ("/fail <tool> <code> [n] [after]", "inject a mock failure into the next n calls (code e.g. SERVER_ERROR, TIMEOUT)"),
     ("/quit", "exit"),
 ]
 
@@ -106,24 +104,9 @@ def show_last_trace(console: Console, agent: Agent) -> None:
     report.render_turn_trace(console, build_turn_trace(agent.run_id, events[0]["trace_id"], turn, events))
 
 
-def handle_fail(console: Console, agent: Agent, args: list[str]) -> None:
-    tools = {t.name for ts in agent.groups.values() for t in ts}
-    if len(args) < 2 or args[0] not in tools:
-        console.print("[yellow]usage:[/yellow] " + escape("/fail <tool> <code> [n] [after]") + "   tools: " + escape(", ".join(sorted(tools))))
-        return
-    tool, code = args[0], args[1].upper()
-    if code not in ErrorCode.__members__:
-        console.print(f"[red]unknown code {escape(code)}[/red]. Try SERVER_ERROR, TIMEOUT, RATE_LIMITED, NOT_FOUND")
-        return
-    n = int(args[2]) if len(args) > 2 and args[2].isdigit() else 1
-    after = "after" in args[2:]
-    agent.backend.fail_next(tool, code, n, after_commit=after)
-    console.print(f"[green]ok[/green] next {n} call(s) to {escape(tool)} will fail with {code}" + (" (after commit)" if after else ""))
-
-
 def handle_command(console: Console, agent: Agent, settings: Settings, line: str, print_help: Any) -> bool:
     """Returns True if the REPL should exit."""
-    cmd, *args = line.split()
+    cmd = line.split()[0]
     if cmd in ("/quit", "/exit", "/q"):
         return True
     if cmd == "/help":
@@ -136,8 +119,6 @@ def handle_command(console: Console, agent: Agent, settings: Settings, line: str
         show_last_trace(console, agent)
     elif cmd == "/runs":
         report.show_runs(console, settings.log_dir)
-    elif cmd == "/fail":
-        handle_fail(console, agent, args)
     else:
         console.print(f"[yellow]Unknown command {escape(cmd)}.[/yellow] Try /help")
     return False

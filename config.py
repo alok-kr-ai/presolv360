@@ -14,7 +14,7 @@ from typing import Any
 from dotenv import load_dotenv
 from pydantic import BaseModel, ConfigDict, Field
 
-DEFAULT_MODEL = "openai/gpt-4o-mini"
+DEFAULT_MODEL = "openai/gpt-6-luna"
 DEFAULT_FALLBACKS = ["openai/gpt-4o-mini", "openai/gpt-4.1-mini"]
 DEFAULT_CONTEXT_FALLBACK = "openai/gpt-4.1-mini"
 DEFAULT_MOCK_DATA_DIR = Path(__file__).resolve().parent / "mocks" / "data"
